@@ -1,0 +1,132 @@
+<header [ngClass]="{'topbar':!userCorner,'topbar-login':userCorner}" class="text-white" id="topbar">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-sm-8">
+        <!--<p class="topbar-intro">Enjoy your favourite movie, TV show &amp; video in a single subscription at $60</p>-->
+      </div>
+      <div class="col-lg-6 col-sm-4">
+        <div class="topbar-right-btns">
+          <div *ngIf="userCorner; else login">
+            <!--<div class="account-info"><img src="{{user.avatar}}" alt=""></div>-->
+            <div class="btn-group" dropdown>
+              <a class="btn" dropdownToggle><img src="{{getAvatar()}}" class="img-circle" alt="{{userInfo.name}}" width="30" height="30"/> {{userInfo.name}}
+              </a>
+              <ul *dropdownMenu class="dropdown-menu" role="menu">
+                <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                <li class="divider dropdown-divider"></li>
+                <li role="menuitem"><a class="dropdown-item" href="#" (click)="logOut()">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <ng-template #login>
+            <a class="btn" (click)="this.showModal()">Log In | Register</a>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Modal Login/SignUp -->
+<div class="modal fade" bsModal #loginModal="bs-modal" role="dialog" [config]="{backdrop: 'static'}">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <button aria-hidden="true" class="close" data-dismiss="modal" (click)="register=false; loginModal.hide()" type="button">x
+        </button>
+        <div *ngIf="!register; else registerPage">
+          <form [formGroup]="loginForm" class="form-signin" data-ember-action="2">
+            <h3 class="form-signin-heading">Sign in</h3>
+            <small class="text-muted">Connect {{appName}} with your favorite social network</small>
+            <p class="text-center">
+            <span class="btn btn-primary social-login-btn social-facebook" (click)="loginWith('facebook')"><i
+              class="fa fa-facebook"></i></span>
+              <span class="btn btn-primary social-login-btn social-google" (click)="loginWith('google')"><i
+                class="fa fa-google-plus"></i></span>
+              <!--<span class="btn btn-primary social-login-btn social-twitter"><i-->
+                <!--class="fa fa-twitter"></i></span>-->
+              <span class="btn btn-primary social-login-btn social-linkedin" (click)="loginLinkedin()"><i
+                class="fa fa-linkedin"></i></span>
+
+            </p>
+            <small class="text-muted">Or sign in with {{appName}}</small>
+            <div *ngIf="formErrors.email || formErrors.password " class="alert alert-danger">
+              {{ formErrors.email || formErrors.password }}
+            </div>
+            <input id="ember360" class="ember-view ember-text-field form-control general-input"
+                   placeholder="Email Address"
+                   type="text" formControlName="email">
+            <input id="ember361" class="ember-view ember-text-field form-control general-input"
+                   placeholder="Password"
+                   type="password" formControlName="password">
+            <br/>
+            <button class="btn btn-lg btn-primary btn-block btn-center" [disabled]="!loginForm.valid" (click)="signIn()">Sign in
+            </button>
+            <br/>
+            <small class="create-account text-muted">Dont have a {{appName}} account or social network account?
+              <button class="ember-view btn btn-sm btn-default" (click)="switchMode()"> Sign Up</button>
+            </small>
+          </form>
+        </div>
+
+        <ng-template #registerPage>
+          <form [formGroup]="registerForm" class="form-signin" data-ember-action="2" id="sign-up-form">
+            <h3 class="form-signin-heading">Sign up</h3>
+            <small class="text-muted">Register {{appName}} with your bellow information to explore our features</small>
+
+            <div *ngIf="formErrors.name || formErrors.email || formErrors.password || formErrors.confirmPassword" class="alert alert-danger">
+              {{ formErrors.name || formErrors.email || formErrors.password || formErrors.confirmPassword }}
+            </div>
+
+            <div class="form-group">
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="text" class="ember-view ember-text-field form-control" formControlName="name" name="name" id="name"  placeholder="Enter your Name" required/>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+                  <input type="text" class="ember-view ember-text-field form-control" formControlName="email" name="email" id="email"  placeholder="Enter your Email" required/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" class="ember-view ember-text-field form-control" formControlName="password" name="password" id="password"  placeholder="Enter your Password" required/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="cols-sm-10">
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+                  <input type="password" class="ember-view ember-text-field form-control" formControlName="confirmPassword" name="confirmPassword" id="confirmPassword"  placeholder="Confirm your Password" required/>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-lg btn-success btn-block btn-center" [disabled]="!registerForm.valid" (click)="signUp()">Sign up
+            </button>
+            <br/>
+            <small class="create-account text-muted">You've already have {{appName}} account or social network account?
+              <button id="ember363" class="ember-view btn btn-sm btn-default" (click)="switchMode()"> Sign In </button>
+            </small>
+          </form>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

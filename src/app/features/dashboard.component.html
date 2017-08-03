@@ -1,0 +1,17 @@
+<section>
+	<h3> Welcome to the Dashboard {{user.name}}!</h3>
+  <ng-container *ngIf="testSub$ | async">Api test sub: {{ testSub$ | async }}</ng-container>
+	<form class="form-group" [formGroup]="form" (ngSubmit)="submitState()" autocomplete="off">
+		<div class="form-group">
+			<label for="password">Enter your name</label>
+			<input formControlName="name" id="password" [placeholder]="nameLabel">
+			<button class="btn btn-primary">Update store</button>
+		</div>
+	</form>
+	<button class="btn btn-danger" (click)="logout()">Logout</button>
+</section>
+
+<a [routerLink]="['/dashboard/1']">Link 1</a>
+<a [routerLink]="['/dashboard/2']">Link 2</a>
+<a [routerLink]="['/dashboard/3']">Link 3</a>
+<a [routerLink]="['/dashboard/4']">Link 4</a>

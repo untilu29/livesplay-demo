@@ -1,0 +1,53 @@
+<!-- Page Header -->
+<div class="page-header">
+  <div class="page-header-overlay">
+    <div class="container">
+      <h2 class="page-title">All videos</h2>
+    </div>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<div class="main-wrap">
+  <div class="section section-padding video-list-section">
+    <div class="container">
+      <div class="row">
+        <div class="show-listing">
+          <div *ngFor="let video of videos | paginate: { itemsPerPage: perPage, currentPage: page, totalItems: count}; let last=last" class="col-md-3 col-sm-4 col-xs-6">
+            <div class="video-item">
+              <div class="thumb-wrap">
+                <img src="{{video.imgThumb}}" alt="{{video.name}}">
+                <span class="rating">9.2</span>
+                <div class="thumb-hover">
+                  <a class="play-video" href="{{video.src}}"><i class="fa fa-play"></i></a>
+                </div>
+              </div>
+              <div class="video-details">
+                <h4 class="video-title"><a [routerLink]="['/video/'+video.slug]">{{video.name}}</a></h4>
+                <p class="video-release-on">{{convertTime(video.createdAt)}}</p>
+              </div>
+            </div>
+            <span *ngIf="last">{{videoCarouselOwl()}}</span>
+          </div>
+          <div class="col-xs-12">
+            <!-- Video Pagination -->
+            <nav class="navigation pagination" role="navigation">
+              <div class="nav-links">
+                <!--<span class="current-page">Page 2 of 14</span>-->
+                <!--<a class="prev page-numbers" href="#"><i class="fa fa-caret-left"></i></a>-->
+                <!--<a class="page-numbers" href="#">1</a>-->
+                <!--<span class="page-numbers current">2</span>-->
+                <!--<a class="page-numbers" href="#">3</a>-->
+                <!--<a class="page-numbers" href="#">4</a>-->
+                <!--<a class="next page-numbers" href="#"><i class="fa fa-caret-right"></i></a>-->
+                <pagination-controls (pageChange)="getVideoPaginate($event)"></pagination-controls>
+
+              </div>
+            </nav>
+            <!-- Video Pagination End -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

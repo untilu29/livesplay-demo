@@ -1,0 +1,123 @@
+<!-- Page Header -->
+<div class="page-header single-video-header" [style.backgroundImage]="'url('+video.imgCover?video.imgCover:null+')'">
+  <div class="page-header-overlay">
+    <div class="container">
+      <h2 class="page-title">{{video.name}}</h2>
+    </div>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<div class="main-wrap">
+  <div class="section section-padding video-single-section">
+    <div class="container">
+      <div class="video-single">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="thumb-wrap single-thumb" [style.backgroundImage]="'url('+video.imgCover?video.imgCover:null+')'">
+              <img src="{{video.imgCover}}" alt="{{video?.name}}">
+              <div class="thumb-hover">
+                <a class="play-video" href="{{video.src}}"><i class="fa fa-play"></i></a>
+              </div>
+            </div>
+            <div class="content-wrap">
+              <div class="video-thumb">
+                <!--<img src="{{video.imgThumb}}" alt="Movie thumb">-->
+              </div>
+              <div class="video-details xs-top-40">
+                <div class="single-section">
+                  <h3 class="video-title">{{video.name}}</h3>
+                  <p class="video-release-date">{{convertTime(video.createdAt)}}</p>
+                  <div class="ratings-wrap">
+                    <span class="rating">10</span>
+                    <div class="expanded-rating">
+                      <div class="star-rating">
+                        <span class="star on"></span>
+                        <span class="star on"></span>
+                        <span class="star on"></span>
+                        <span class="star on"></span>
+                        <span class="star on"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                        <span class="star"></span>
+                      </div>
+                      <div class="user-voted">
+                        <i class="fa fa-user"></i> 150 Votes
+                      </div>
+                    </div>
+                  </div>
+                  <div class="video-attributes">
+                    <p class="cast"><label>Authors:</label>  <span *ngFor="let author of video.authors; let last=last">{{author.name+ (last?"":", ")}} </span></p>
+                    <p class="duration"><label>Time:</label> {{convertDuration(video.duration)}} minutes</p>
+                    <p class="genre"><label>Genres:</label> <span *ngFor="let genre of video.genres; let last=last">{{genre.name+ (last?"":", ")}} </span></p>
+                    <p class="country"><label>Country: </label> USA</p>
+                    <p class="language"><label>Language: </label> English</p>
+                  </div>
+                  <div class="share-on">
+                    <label>Share: </label>
+                    <div class="share-social">
+                      <a href="#"><i class="fa fa-facebook"></i></a>
+                      <a href="#"><i class="fa fa-twitter"></i></a>
+                      <a href="#"><i class="fa fa-google-plus"></i></a>
+                      <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </div>
+                  </div>
+                </div>
+                <div class="single-section video-entry">
+                  <h3 class="single-section-title">Description</h3>
+                  <div class="section-content">
+                    <p style="text-align: justify;">{{video.description}}</p>
+                  </div>
+                </div>
+                <!--<div class="single-section video-entry">-->
+                  <!--<h3 class="single-section-title">Video &amp; Photo</h3>-->
+                  <!--<div class="section-content">-->
+                    <!--<div id="single-gallery-1" class="owl-carousel single-gallery-slider">-->
+                      <!--<img class="img-responsive" src="assets/images/slider/single-1.png" alt="Single Slider Image">-->
+                      <!--<img class="img-responsive" src="assets/images/slider/single-2.png" alt="Single Slider Image">-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest Movies -->
+  <div class="section section-padding top-padding-normal movie-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="section-header">
+            <h2 class="section-title">Latest Videos</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="owl-carousel video-carousel" id="video-carousel">
+          <div *ngFor="let video of videos ; let last=last" class="video-item">
+            <div class="thumb-wrap">
+              <img src="{{video.imgThumb}}" alt="{{video.name}}">
+              <span class="rating">9.2</span>
+              <div class="thumb-hover">
+                <a class="play-video" href="{{video.src}}"><i class="fa fa-play"></i></a>
+              </div>
+            </div>
+            <div class="video-details">
+              <h4 class="video-title"><a [routerLink]="['/video/'+video.slug]">{{video.name}}</a></h4>
+              <p class="video-release-on">{{convertTime(video.createdAt)}}</p>
+            </div>
+            <span *ngIf="last">{{videoCarouselOwl()}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Latest Movies End -->
+</div>
